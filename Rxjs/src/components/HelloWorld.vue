@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+    <h2 @click="get">Essential Links</h2>
     <ul>
       <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import Rx from 'rxjs/Rx';
+
 export default {
   name: 'HelloWorld',
   data() {
@@ -28,12 +30,34 @@ export default {
       msg: 'Welcome to Your Vue.js App',
     };
   },
+  methods: {
+    get() {
+      const observable = Rx.Observable.create((observer) => {
+        observer.next(1);
+        observer.next(2);
+        observer.next(3);
+        setTimeout(() => {
+          observer.next(4);
+          observer.complete();
+        }, 1000);
+      });
+
+      console.log('just before subscribe');
+      observable.subscribe({
+        next: x => console.log('got value ' + x), // eslint-disable-line prefer-template
+        error: err => console.error('something wrong occurred: ' + err), // eslint-disable-line prefer-template
+        complete: () => console.log('done'),
+      });
+      console.log('just after subscribe');
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {

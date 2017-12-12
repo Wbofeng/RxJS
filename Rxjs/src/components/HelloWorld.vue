@@ -102,7 +102,9 @@ export default {
       const observable = Rx.Observable.from([1, 2, 3, 4]);
 
       observable.subscribe(subject); */
-      const subject = new Rx.BehaviorSubject(0); // 0是初始值
+
+      // BehaviorSubject
+      /* const subject = new Rx.BehaviorSubject(0); // 0是初始值
 
       subject.subscribe({
         next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
@@ -115,7 +117,25 @@ export default {
         next: v => console.log('observerB: ' + v), // eslint-disable-line prefer-template
       });
 
+      subject.next(3); */
+
+      // ReplaySubject
+      const subject = new Rx.ReplaySubject(3); // 为新的订阅者缓冲3个值
+
+      subject.subscribe({
+        next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
+      });
+
+      subject.next(1);
+      subject.next(2);
       subject.next(3);
+      subject.next(4);
+
+      subject.subscribe({
+        next: v => console.log('observerB: ' + v), // eslint-disable-line prefer-template
+      });
+
+      subject.next(5);
     },
   },
 };

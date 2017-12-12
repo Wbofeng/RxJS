@@ -90,7 +90,7 @@ export default {
         // subscription 和 childSubscription 都会取消订阅
         subscription.unsubscribe();
       }, 1000); */
-      const subject = new Rx.Subject();
+      /* const subject = new Rx.Subject();
 
       subject.subscribe({
         next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
@@ -101,7 +101,21 @@ export default {
 
       const observable = Rx.Observable.from([1, 2, 3, 4]);
 
-      observable.subscribe(subject);
+      observable.subscribe(subject); */
+      const subject = new Rx.BehaviorSubject(0); // 0是初始值
+
+      subject.subscribe({
+        next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
+      });
+
+      subject.next(1);
+      subject.next(2);
+
+      subject.subscribe({
+        next: v => console.log('observerB: ' + v), // eslint-disable-line prefer-template
+      });
+
+      subject.next(3);
     },
   },
 };

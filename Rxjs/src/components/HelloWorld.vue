@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     get() {
+      // 异步输出
       /* const observable = Rx.Observable.create((observer) => {
         observer.next(1);
         observer.next(2);
@@ -45,12 +46,12 @@ export default {
       console.log('just before subscribe');
       observable.subscribe({
         next: x => console.log('got value ' + x), // eslint-disable-line prefer-template
-        error: err => console.error('something wrong occurred: ' + err), // eslint-disable-line prefer-template
+        error: err => console.error('something wrong occurred: ' + err),
         complete: () => console.log('done'),
       });
       console.log('just after subscribe'); */
 
-      const foo = Rx.Observable.create((observer) => {
+      /* const foo = Rx.Observable.create((observer) => {
         console.log('Hello');
         observer.next(42);
         observer.next(100); // “返回”另外一个值
@@ -61,7 +62,20 @@ export default {
       foo.subscribe((x) => {
         console.log(x);
       });
-      console.log('after');
+      console.log('after'); */
+      // 清除 observable 执行
+      const observable = Rx.Observable.create((observer) => {
+        // 追踪 interval 资源
+        const intervalID = setInterval(() => {
+          observer.next('hi');
+        }, 1000);
+
+        // 提供取消和清理 interval 资源的方法
+        return function unsubscribe() {
+          clearInterval(intervalID);
+        };
+      });
+      console.log(observable);
     },
   },
 };

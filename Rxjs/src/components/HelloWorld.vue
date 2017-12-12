@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     get() {
-      const observable = Rx.Observable.create((observer) => {
+      /* const observable = Rx.Observable.create((observer) => {
         observer.next(1);
         observer.next(2);
         observer.next(3);
@@ -48,7 +48,20 @@ export default {
         error: err => console.error('something wrong occurred: ' + err), // eslint-disable-line prefer-template
         complete: () => console.log('done'),
       });
-      console.log('just after subscribe');
+      console.log('just after subscribe'); */
+
+      const foo = Rx.Observable.create((observer) => {
+        console.log('Hello');
+        observer.next(42);
+        observer.next(100); // “返回”另外一个值
+        observer.next(200); // 还可以再“返回”值
+      });
+
+      console.log('before');
+      foo.subscribe((x) => {
+        console.log(x);
+      });
+      console.log('after');
     },
   },
 };

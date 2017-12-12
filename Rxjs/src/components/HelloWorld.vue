@@ -64,7 +64,7 @@ export default {
       });
       console.log('after'); */
       // 清除 observable 执行
-      const observable = Rx.Observable.create((observer) => {
+      /* const observable = Rx.Observable.create((observer) => {
         // 追踪 interval 资源
         const intervalID = setInterval(() => {
           observer.next('hi');
@@ -75,7 +75,21 @@ export default {
           clearInterval(intervalID);
         };
       });
-      console.log(observable);
+      console.log(observable); */
+
+      // 清除 subscription
+      /* const observable1 = Rx.Observable.interval(400);
+      const observable2 = Rx.Observable.interval(300);
+
+      const subscription = observable1.subscribe(x => console.log('first: ' + x)); // eslint-disable-line prefer-template
+      const childSubscription = observable2.subscribe(x => console.log('second: ' + x)); // eslint-disable-line prefer-template
+
+      subscription.add(childSubscription);
+
+      setTimeout(() => {
+        // subscription 和 childSubscription 都会取消订阅
+        subscription.unsubscribe();
+      }, 1000); */
     },
   },
 };

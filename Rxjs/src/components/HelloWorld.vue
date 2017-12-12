@@ -81,8 +81,8 @@ export default {
       /* const observable1 = Rx.Observable.interval(400);
       const observable2 = Rx.Observable.interval(300);
 
-      const subscription = observable1.subscribe(x => console.log('first: ' + x)); // eslint-disable-line prefer-template
-      const childSubscription = observable2.subscribe(x => console.log('second: ' + x)); // eslint-disable-line prefer-template
+      const subscription = observable1.subscribe(x => console.log('first: ' + x));
+      const childSubscription = observable2.subscribe(x => console.log('second: ' + x));
 
       subscription.add(childSubscription);
 
@@ -90,6 +90,18 @@ export default {
         // subscription 和 childSubscription 都会取消订阅
         subscription.unsubscribe();
       }, 1000); */
+      const subject = new Rx.Subject();
+
+      subject.subscribe({
+        next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
+      });
+      subject.subscribe({
+        next: v => console.log('observerB: ' + v), // eslint-disable-line prefer-template
+      });
+
+      const observable = Rx.Observable.from([1, 2, 3, 4]);
+
+      observable.subscribe(subject);
     },
   },
 };

@@ -136,7 +136,7 @@ export default {
       });
 
       subject.next(5); */
-      const subject = new Rx.ReplaySubject(100, 500 /* windowTime */);
+      /* const subject = new Rx.ReplaySubject(100, 500);
 
       subject.subscribe({
         next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
@@ -149,7 +149,24 @@ export default {
         subject.subscribe({
           next: v => console.log('observerB: ' + v), // eslint-disable-line prefer-template
         });
-      }, 1000);
+      }, 1000); */
+      const subject = new Rx.AsyncSubject();
+
+      subject.subscribe({
+        next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
+      });
+
+      subject.next(1);
+      subject.next(2);
+      subject.next(3);
+      subject.next(4);
+
+      subject.subscribe({
+        next: v => console.log('observerB: ' + v), // eslint-disable-line prefer-template
+      });
+
+      subject.next(5);
+      subject.complete();
     },
   },
 };

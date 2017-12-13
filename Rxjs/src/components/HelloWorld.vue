@@ -120,7 +120,7 @@ export default {
       subject.next(3); */
 
       // ReplaySubject
-      const subject = new Rx.ReplaySubject(3); // 为新的订阅者缓冲3个值
+      /* const subject = new Rx.ReplaySubject(3); // 为新的订阅者缓冲3个值
 
       subject.subscribe({
         next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
@@ -135,7 +135,21 @@ export default {
         next: v => console.log('observerB: ' + v), // eslint-disable-line prefer-template
       });
 
-      subject.next(5);
+      subject.next(5); */
+      const subject = new Rx.ReplaySubject(100, 500 /* windowTime */);
+
+      subject.subscribe({
+        next: v => console.log('observerA: ' + v), // eslint-disable-line prefer-template
+      });
+
+      let i = 1;
+      setInterval(() => subject.next(i += 1), 200); // eslint-disable-line no-return-assign
+
+      setTimeout(() => {
+        subject.subscribe({
+          next: v => console.log('observerB: ' + v), // eslint-disable-line prefer-template
+        });
+      }, 1000);
     },
   },
 };

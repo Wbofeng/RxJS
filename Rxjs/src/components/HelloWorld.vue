@@ -21,13 +21,13 @@
 </template>
 
 <script>
-import Rx from 'rxjs/Rx';
+import Rx from "rxjs/Rx";
 
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      msg: "Welcome to Your Vue.js App"
     };
   },
   methods: {
@@ -50,7 +50,6 @@ export default {
         complete: () => console.log('done'),
       });
       console.log('just after subscribe'); */
-
       /* const foo = Rx.Observable.create((observer) => {
         console.log('Hello');
         observer.next(42);
@@ -76,7 +75,6 @@ export default {
         };
       });
       console.log(observable); */
-
       // 清除 subscription
       /* const observable1 = Rx.Observable.interval(400);
       const observable2 = Rx.Observable.interval(300);
@@ -102,7 +100,6 @@ export default {
       const observable = Rx.Observable.from([1, 2, 3, 4]);
 
       observable.subscribe(subject); */
-
       // BehaviorSubject
       /* const subject = new Rx.BehaviorSubject(0); // 0是初始值
 
@@ -118,7 +115,6 @@ export default {
       });
 
       subject.next(3); */
-
       // ReplaySubject
       /* const subject = new Rx.ReplaySubject(3); // 为新的订阅者缓冲3个值
 
@@ -167,7 +163,7 @@ export default {
 
       subject.next(5);
       subject.complete(); */
-      function multiplyByTen(input) {
+      /* function multiplyByTen(input) {
         const output = Rx.Observable.create(function subscribe(observer) {
           input.subscribe({
             next: v => observer.next(10 * v),
@@ -180,9 +176,32 @@ export default {
 
       const input = Rx.Observable.from([1, 2, 3, 4]);
       const output = multiplyByTen(input);
-      output.subscribe(x => console.log(x));
-    },
-  },
+      output.subscribe(x => console.log(x)); */
+      // 来自一个或多个值
+      /*       Rx.Observable.of("foo", "bar");
+
+      // 来自数组
+      Rx.Observable.from([1, 2, 3]);
+
+      // 来自事件
+      Rx.Observable.fromEvent(document.querySelector("button"), "click");
+
+      // 来自 Promise
+      Rx.Observable.fromPromise(fetch("/users"));
+
+      // 来自回调函数(最后一个参数得是回调函数，比如下面的 cb)
+      // fs.exists = (path, cb(exists))
+      var exists = Rx.Observable.bindCallback(fs.exists);
+      exists("file.txt").subscribe(exists =>
+        console.log("Does file exist?", exists)
+      );
+
+      // 来自回调函数(最后一个参数得是回调函数，比如下面的 cb)
+      // fs.rename = (pathA, pathB, cb(err, result))
+      var rename = Rx.Observable.bindNodeCallback(fs.rename);
+      rename("file.txt", "else.txt").subscribe(() => console.log("Renamed!")); */
+    }
+  }
 };
 </script>
 
